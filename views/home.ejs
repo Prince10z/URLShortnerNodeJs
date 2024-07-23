@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rendering Data</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        table,
+        tr,
+        th,
+        td {
+            border: 1px solid black;
+            padding: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>URL Shortener</h1>
+    <% if(locals.id) {%>
+        <p>URL Generated: http://localhost:7001/url/<%= id%>
+        </p>
+        <% } %>
+            <div>
+                <form method="POST" action="/url">
+                    <label>Enter Your original URL</label>
+                    <input type="text" name="url" placeholder="https://example.com">
+                    <button type="submit">Generate</button>
+                </form>
+            </div>
+            <div>
+
+                <% if (locals.urls ) { %>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S.NO</th>
+                                <th>ShortID</th>
+                                <th>Redirect</th>
+                                <th>Clicks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% urls.forEach((url, index)=> { %>
+
+                                <tr>
+                                    <td>
+                                        <%= index + 1 %>
+                                    </td>
+                                    <td>
+                                        <%= url.shortId %>
+                                    </td>
+                                    <td>
+                                        <%= url.redirectURL %>
+                                    </td>
+                                    <td>
+                                        <%= url.visitHistory.length %>
+                                    </td>
+
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                    <% } else { %>
+                        <p>No URLs found.</p>
+                        <% } %>
+
+            </div>
+
+</body>
+
+</html>
