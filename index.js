@@ -1,12 +1,13 @@
 const express = require("express");
 const urlRoute = require("./routes/url");
 const connectdb = require("./connect");
+require('dotenv').config();
 const app = express();
 const PORT = 2001;
 const URL = require("./models/url");
 const path = require("path");
 const staticRoute = require("./routes/staticRouter");
-connectdb("mongodb://127.0.0.1:27017/shortURL");
+connectdb(process.env.url);
 //MiddleWares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -42,6 +43,6 @@ app.delete('/delete', async (req, res) => {
     res.json({ status: "Success" });
 })
 //Starting Server
-app.listen(PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
     console.log(`Starting server at port :${PORT}...`);
 })
